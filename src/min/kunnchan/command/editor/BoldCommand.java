@@ -1,0 +1,29 @@
+package min.kunnchan.command.editor;
+/*
+ * Created by kunnchan on 02/09/2020
+ * package :  min.kunnchan.command.editor
+ */
+
+public class BoldCommand implements UndoableCommand {
+
+    private String prevContent;
+    private HtmlDocument document;
+    private History history;
+
+    public BoldCommand(HtmlDocument document, History history) {
+        this.document = document;
+        this.history = history;
+    }
+
+    @Override
+    public void unExecute() {
+        document.setContent(prevContent);
+    }
+
+    @Override
+    public void execute() {
+        prevContent = document.getContent();
+        document.makeBold();
+        history.push(this);
+    }
+}
